@@ -66,7 +66,34 @@ func main() {
 Stored/persistent cache:
 
 ```go
-// TODO
+package main
+
+import (
+ "os"
+
+ "github.com/qeaml/ggpc"
+)
+
+func main() {
+ // temporary file, use an actual file to place your cache in instead!
+ f, err := os.CreateTemp("", "my_cache")
+ if err != nil {
+  panic(err)
+ }
+ defer f.Close()
+
+ // create a new stored cache
+ // NOTE: this will not load the cache's state from the file, you have to use
+ //       cache.Load() to load it or use LoadStored() instead
+ cache := ggpc.NewStored[string, int](f)
+
+ /*
+  do stuff with your cache
+ */
+
+ // write the changes to storage (concurrency safe)
+ cache.Save()
+}
 ```
 
 [docs]: https://pkg.go.dev/github.com/qeaml/ggpc
