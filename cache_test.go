@@ -43,6 +43,14 @@ func TestMemory(t *testing.T) {
 	assert(t, v == 1, "value incorrect")
 	v = c.GetOrDefault("c", -1)
 	assert(t, v == -1, "value incorrect")
+	solid := c.Solidify()
+	v, ok = solid["a"]
+	assert(t, ok, "solid copy value not present")
+	assert(t, v == 1, "solid copy value incorrect")
+	c.Set("a", 99)
+	v, ok = solid["a"]
+	assert(t, ok, "solid copy value not present")
+	assert(t, v == 1, "solid copy value incorrect")
 
 	assertNonerror(t, f.Close())
 }
