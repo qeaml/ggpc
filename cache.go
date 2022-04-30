@@ -147,3 +147,12 @@ func (c *Cache[K, V]) SetAndSave(key K, val V) {
 	c.Set(key, val)
 	go c.Save()
 }
+
+// Solidify returns a shallow copy of the values inside the cache
+func (c *Cache[K, V]) Solidify() map[K]V {
+	out := make(map[K]V)
+	for k, v := range c.values {
+		out[k] = v
+	}
+	return out
+}
